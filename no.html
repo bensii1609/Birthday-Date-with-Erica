@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>wrong answer.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+      background: #0d0608;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 40%, #2a0810 0%, #0d0608 70%);
+      z-index: 0;
+    }
+
+    /* rain of sad emojis */
+    .rain { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+    .drop {
+      position: absolute;
+      top: -40px;
+      font-size: 1.2rem;
+      animation: fallDown linear infinite;
+      opacity: 0.5;
+    }
+    @keyframes fallDown {
+      0%   { transform: translateY(0); opacity: 0.6; }
+      100% { transform: translateY(110vh); opacity: 0; }
+    }
+
+    /* shake animation on load */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,100,100,0.15);
+      border-radius: 32px;
+      padding: 48px 36px 40px;
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+      animation: shakeIn 0.7s cubic-bezier(0.36,0.07,0.19,0.97) both;
+    }
+
+    @keyframes shakeIn {
+      0%   { transform: translateX(0) scale(0.8); opacity: 0; }
+      20%  { transform: translateX(-18px) scale(1.02); opacity: 1; }
+      40%  { transform: translateX(16px); }
+      60%  { transform: translateX(-12px); }
+      80%  { transform: translateX(8px); }
+      100% { transform: translateX(0) scale(1); opacity: 1; }
+    }
+
+    .cry-emoji {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 18px;
+      animation: wobble 1.2s ease-in-out infinite;
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-6deg) scale(1); }
+      50%       { transform: rotate(6deg) scale(1.08); }
+    }
+
+    h1 {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(1.9rem, 7vw, 2.6rem);
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    h1 em {
+      color: #f97070;
+      font-style: normal;
+    }
+
+    .sub {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.65;
+      margin-bottom: 14px;
+      font-weight: 300;
+    }
+
+    .sub2 {
+      font-family: 'Caveat', cursive;
+      font-size: 1.15rem;
+      color: #f9a0a0;
+      margin-bottom: 36px;
+    }
+
+    /* countdown */
+    .countdown-wrap {
+      margin-bottom: 28px;
+    }
+
+    .countdown-label {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .countdown {
+      font-family: 'Caveat', cursive;
+      font-size: 3.5rem;
+      color: #f97070;
+      line-height: 1;
+      animation: countPulse 1s ease-in-out infinite;
+    }
+
+    @keyframes countPulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.1); }
+    }
+
+    .btn-back {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #c93060, #8a1a3a);
+      color: #fff;
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s ease, opacity 0.15s;
+      box-shadow: 0 8px 24px rgba(140,30,60,0.5);
+    }
+
+    .btn-back:hover { transform: translateY(-2px); opacity: 0.92; }
+    .btn-back:active { transform: scale(0.97); }
+  </style>
+</head>
+<body>
+
+  <div class="bg"></div>
+  <div class="rain" id="rain"></div>
+
+  <div class="card">
+    <span class="cry-emoji">😿</span>
+    <h1>why did you click <em>no</em> :(((</h1>
+    <p class="sub">this is not an acceptable answer.<br/>there is only one correct option here.</p>
+    <p class="sub2">try again. please. i'm begging you.</p>
+
+    <div class="countdown-wrap">
+      <p class="countdown-label">sending you back in</p>
+      <p class="countdown" id="count">5</p>
+    </div>
+
+    <a class="btn-back" href="index.html">ok ok… let me try again 🥺</a>
+  </div>
+
+  <script>
+    // sad rain
+    const sadEmojis = ['💔','😢','😭','🙁','😿','💧','☁️'];
+    const rain = document.getElementById('rain');
+    for (let i = 0; i < 30; i++) {
+      const d = document.createElement('span');
+      d.className = 'drop';
+      d.textContent = sadEmojis[Math.floor(Math.random() * sadEmojis.length)];
+      d.style.left = Math.random() * 100 + 'vw';
+      d.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+      d.style.animationDuration = (3 + Math.random() * 5) + 's';
+      d.style.animationDelay = (Math.random() * 6) + 's';
+      rain.appendChild(d);
+    }
+
+    // countdown then redirect
+    let secs = 5;
+    const countEl = document.getElementById('count');
+    const timer = setInterval(() => {
+      secs--;
+      countEl.textContent = secs;
+      if (secs <= 0) {
+        clearInterval(timer);
+        window.location.href = 'index.html';
+      }
+    }, 1000);
+  </script>
+</body>
+</html>

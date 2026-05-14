@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Erica's 22nd Birthday</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #fef6f0;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+
+    .header {
+      text-align: center;
+      padding: 52px 20px 16px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .age-tag {
+      display: inline-block;
+      background: #f9cfc5;
+      color: #b5503a;
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      padding: 4px 16px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(2.8rem, 10vw, 4.8rem);
+      color: #3d1f2b;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+
+    h1 span { color: #c96e5a; }
+
+    .hearts-scattered {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      height: 340px;
+      margin: 24px auto 0;
+    }
+
+    .heart-photo {
+      position: absolute;
+      clip-path: path("M75,120 C32,88 0,58 0,30 C0,12 13,0 30,0 C44,0 59,10 75,28 C91,10 106,0 120,0 C137,0 150,12 150,30 C150,58 118,88 75,120Z");
+      width: 150px;
+      height: 120px;
+      transform: rotate(var(--r));
+      animation: popIn 0.55s cubic-bezier(0.34,1.56,0.64,1) both;
+      transition: transform 0.25s ease;
+    }
+
+    .heart-photo:hover { transform: rotate(var(--r)) scale(1.08); }
+
+    .heart-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .heart-photo:nth-child(1) { left: 2%;  top: 20px;  --r: -11deg; animation-delay: 0.08s; }
+    .heart-photo:nth-child(2) { left: 30%; top: 0px;   --r:   7deg; animation-delay: 0.18s; }
+    .heart-photo:nth-child(3) { right: 2%; top: 15px;  --r:  -5deg; animation-delay: 0.28s; }
+    .heart-photo:nth-child(4) { left: 12%; top: 185px; --r:   9deg; animation-delay: 0.38s; }
+    .heart-photo:nth-child(5) { left: 52%; top: 175px; --r:  -8deg; animation-delay: 0.48s; }
+
+    @keyframes popIn {
+      0%   { opacity: 0; transform: scale(0) rotate(var(--r)); }
+      60%  { opacity: 1; transform: scale(1.18) rotate(var(--r)); }
+      80%  { transform: scale(0.93) rotate(var(--r)); }
+      100% { opacity: 1; transform: scale(1) rotate(var(--r)); }
+    }
+
+    .message-card {
+      background: #fff;
+      border-radius: 22px;
+      padding: 28px 30px;
+      width: 100%;
+      max-width: 520px;
+      margin: 32px 16px 0;
+      box-shadow: 0 4px 20px rgba(61,31,43,0.07);
+      animation: fadeUp 0.65s 0.2s ease both;
+    }
+
+    .message-card p {
+      font-size: 0.97rem;
+      color: #5a3d35;
+      line-height: 1.75;
+    }
+
+    .message-card .sign {
+      margin-top: 18px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.4rem;
+      color: #c96e5a;
+    }
+
+    .envelope-section {
+      width: 100%;
+      max-width: 520px;
+      padding: 0 16px;
+      margin-top: 36px;
+    }
+
+    .envelope-outer {
+      width: 300px;
+      margin: 0 auto;
+      cursor: pointer;
+      position: relative;
+      perspective: 900px;
+      user-select: none;
+    }
+
+    .env-body {
+      width: 300px;
+      height: 190px;
+      background: #fff8f4;
+      border: 2px solid #f0c8bc;
+      border-radius: 4px 4px 14px 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .env-body::before, .env-body::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 0;
+      height: 0;
+    }
+    .env-body::before {
+      left: 0;
+      border-style: solid;
+      border-width: 95px 0 0 150px;
+      border-color: transparent transparent transparent #f9ddd6;
+    }
+    .env-body::after {
+      right: 0;
+      border-style: solid;
+      border-width: 95px 150px 0 0;
+      border-color: transparent #f9ddd6 transparent transparent;
+    }
+
+    .env-hint {
+      font-family: 'Caveat', cursive;
+      font-size: 1.05rem;
+      color: #c9a498;
+      text-align: center;
+      margin-top: 10px;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    .env-flap {
+      position: absolute;
+      top: 0; left: 0;
+      width: 300px;
+      height: 155px;
+      background: linear-gradient(170deg, #fde8df, #f9cfc5);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      transform: rotateX(0deg);
+      transition: transform 0.7s ease;
+      z-index: 3;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 18px;
+    }
+
+    .env-flap.open { transform: rotateX(-175deg); }
+
+    .heart-seal {
+      font-size: 2.4rem;
+      margin-top: 14px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+      transition: transform 0.3s ease;
+    }
+
+    .envelope-outer:hover .heart-seal { transform: scale(1.15); }
+
+    .plan-reveal {
+      margin-top: 28px;
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .plan-reveal.visible {
+      display: flex;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .plan-date {
+      font-family: 'Caveat', cursive;
+      font-size: 1.7rem;
+      color: #3d1f2b;
+      padding-left: 4px;
+      margin-bottom: 4px;
+    }
+
+    .stop {
+      background: #fff;
+      border-radius: 18px;
+      padding: 22px 22px 22px 20px;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      box-shadow: 0 4px 20px rgba(61,31,43,0.06);
+      border-left: 5px solid #f9cfc5;
+    }
+
+    .stop:nth-child(3) { border-left-color: #c96e5a; }
+
+    .stop-icon { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+
+    .stop-name {
+      font-family: 'Caveat', cursive;
+      font-size: 1.55rem;
+      color: #3d1f2b;
+      margin-bottom: 4px;
+      line-height: 1.1;
+    }
+
+    .stop-desc {
+      font-size: 0.875rem;
+      color: #9e7e75;
+      line-height: 1.6;
+    }
+
+    footer {
+      margin-top: 44px;
+      text-align: center;
+      font-family: 'Caveat', cursive;
+      font-size: 1.4rem;
+      color: #c96e5a;
+      padding: 0 16px;
+      animation: fadeUp 0.65s 0.5s ease both;
+    }
+
+    .petal {
+      position: fixed;
+      top: -30px;
+      pointer-events: none;
+      z-index: 0;
+      animation: drift linear infinite;
+      opacity: 0.55;
+    }
+
+    @keyframes drift {
+      0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0.6; }
+      50%  { transform: translateY(50vh) rotate(180deg) translateX(20px); }
+      100% { transform: translateY(110vh) rotate(360deg) translateX(-10px); opacity: 0; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="age-tag">turning 22 🎂</div>
+    <h1>Erica's<br/><span>22nd Birthday</span></h1>
+  </div>
+
+  <div class="hearts-scattered">
+    <div class="heart-photo"><img src="cat1.png" alt="cat"/></div>
+    <div class="heart-photo"><img src="cat2.png" alt="cat"/></div>
+    <div class="heart-photo"><img src="cat3.png" alt="cat"/></div>
+    <div class="heart-photo"><img src="cat4.png" alt="cat"/></div>
+    <div class="heart-photo"><img src="cat5.png" alt="cat"/></div>
+  </div>
+
+  <div class="message-card">
+    <p>
+      this is a little something for you to know what the plan is for your special birthday evening :)
+      all you have to do is show up and leave everything to me :)
+    </p>
+    <p class="sign">love, your fat boyfriend Ben</p>
+  </div>
+
+  <div class="envelope-section">
+    <div class="envelope-outer" id="envelope" onclick="openEnvelope()">
+      <div class="env-flap" id="envFlap">
+        <div class="heart-seal">💌</div>
+      </div>
+      <div class="env-body"></div>
+    </div>
+    <p class="env-hint" id="envHint">tap to open</p>
+
+    <div class="plan-reveal" id="planReveal">
+      <div class="plan-date">June 12th 2026 Plan</div>
+
+      <div class="stop">
+        <div class="stop-icon">🛍️</div>
+        <div>
+          <div class="stop-name">Shopping</div>
+          <div class="stop-desc">just follow me, turn off your brain and hold my hand. you're the birthday girl just choose what you like ;) though the shopping is a surprise, you'll have to wait and see!</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-icon">🕯️</div>
+        <div>
+          <div class="stop-name">Dinner</div>
+          <div class="stop-desc">just order as you please and enjoy the food :D</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Happy birthday Babe I love you ❤️</footer>
+
+  <script>
+    function openEnvelope() {
+      const envelope = document.getElementById('envelope');
+      const hint = document.getElementById('envHint');
+      const plan = document.getElementById('planReveal');
+      const flap = document.getElementById('envFlap');
+      if (flap.classList.contains('open')) return;
+      flap.classList.add('open');
+      hint.style.display = 'none';
+      setTimeout(() => {
+        envelope.style.opacity = '0';
+        envelope.style.transform = 'scale(0.9)';
+        envelope.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      }, 650);
+      setTimeout(() => {
+        envelope.style.display = 'none';
+        plan.classList.add('visible');
+      }, 1050);
+    }
+
+    const emojis = ['🌸','🌷','✨','🐾','💕','🌹'];
+    for (let i = 0; i < 18; i++) {
+      const el = document.createElement('span');
+      el.className = 'petal';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.fontSize = (0.8 + Math.random() * 1) + 'rem';
+      el.style.animationDuration = (6 + Math.random() * 9) + 's';
+      el.style.animationDelay = '-' + (Math.random() * 10) + 's';
+      document.body.appendChild(el);
+    }
+  </script>
+</body>
+</html>
